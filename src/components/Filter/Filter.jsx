@@ -1,8 +1,4 @@
-export const Filter = ({ filteredContacts }) => {
-  const handleFilter = ({ target: { value } }) => {
-    filteredContacts(value);
-  };
-
+export const Filter = ({ handleFilter }) => {
   return (
     <label>
       <p>Find contacts by name</p>

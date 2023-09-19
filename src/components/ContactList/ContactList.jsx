@@ -1,7 +1,7 @@
-export const ContactList = ({ contacts, filteredContacts, deleteContact }) => {
+export const ContactList = ({ contacts, deleteContact }) => {
   return (
     <ul>
-      {(filteredContacts ?? contacts).map(({ name, id, number }) => {
+      {contacts.map(({ name, id, number }) => {
         return (
           <li key={id}>
             <p>

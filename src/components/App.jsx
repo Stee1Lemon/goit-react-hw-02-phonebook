@@ -16,16 +16,8 @@ export class App extends Component {
     filter: '',
   };
 
-  filteredContacts = contactToFilter => {
-    this.setState(prev => ({
-      filteredContacts: prev.contacts.filter(el =>
-        el.name.toLowerCase().includes(contactToFilter.toLowerCase())
-      ),
-    }));
-  };
-
   addContact = dataByForm => {
-    const alreadyExist = this.state.contacts.find(
+    const alreadyExist = this.state.contacts.some(
       el => el.name.toLowerCase() === dataByForm.name.toLowerCase()
     );
     if (alreadyExist)
@@ -44,17 +36,31 @@ export class App extends Component {
     }));
   };
 
+  getFilteredContacts = () => {
+    const { contacts, filter } = this.state;
+    return contacts.filter(el =>
+      el.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
+  handleFilter = ({ target: { value } }) => {
+    this.setState({
+      filter: value,
+    });
+  };
+
   render() {
+    const filteredContacts = this.getFilteredContacts();
+
     return (
       <PhoneBook>
         <h1>Phonebook</h1>
         <ContactForm addContact={this.addContact} />
 
         <h2>Contacts</h2>
-        <Filter filteredContacts={this.filteredContacts} />
+        <Filter handleFilter={this.handleFilter} />
         <ContactList
-          contacts={this.state.contacts}
-          filteredContacts={this.state.filteredContacts}
+          contacts={filteredContacts}
           deleteContact={this.deleteContact}
         />
       </PhoneBook>
